@@ -4,158 +4,307 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fill My Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-      body {
-        font-family: system-ui, sans-serif;
-        width: 260px;
-        padding: 12px;
-        margin: 0;
+      *,*::before, *::after {
         box-sizing: border-box;
-        color: #1e293b;
+        margin: 0;
+        padding: 0;
       }
-      h3 {
-        margin: 0 0 10px 0;
-        font-size: 1.15rem;
+      :root {
+        --bg: #09090b;
+        --surface: #09090b;
+        --surface2: #1212125;
+        --surface3: #18181b;
+        --border: #27272a;
+        --border-2: #3f3f46;
+        --accent: #fafafa;
+        --accent-dark: #e4e4e7;
+        --text-1: #fafafa;
+        --text-2: #a1a1a1;
+        --text-3: #71717a;
+        --success: #22c55e;
+        --warning: #eab308;
+        --danger: #ef4444;
+        --r: 8px;
+        --r-sm: 6px;
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        --t: 0.15s;
       }
-      button {
-        width: 100%;
-        padding: 8px;
-        margin-top: 8px;
-        cursor: pointer;
+
+      html {
+        font-size: 13.5px;
+      }
+
+  
+      body {
+        font-family: 'Inter', system-ui, -applce-system, sans-serif;
+        background: var(--bg);
+        width: 310px;
+        min-height: 350px;
+        overflow: hidden;
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+        color: var(--text-1);
+      }
+
+      ::-webkit-scrollbar{
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track{
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border);
         border-radius: 4px;
-        border: 1px solid #cbd5e1;
-        background: #f8fafc;
+      }
+
+      .popup-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .brand-logo {
+        width: 22px;
+        height: 22px;
+        border-radius: 5px;
+        background: #fafafa;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 800;
+        color: #09090b;
+        flex-shrink: 0;
+      }
+
+      .brand-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-1);
+        letter-spacing: -0.015em;
+      }
+
+      .brand-version {
+        font-size: 0.62rem;
+        color: var(--text-3);
         font-weight: 500;
-      }
-
-      button:hover{
-        background: #f1f5f9;
-      }
-      .primary-btn {
-        background: #4f46e5;
-        color: white;
-        border: none;
-      }
-      .primary-btn:hover {
-        background: #4338ca;
-      }
-      .primary-btn:disabled {
-        background: #cbd5e1;
-        cursor: not-allowed;
-      }
-      select {
-        width: 100%;
-        padding: 6px 8px;
-        border: 1px solid #cbd5e1;
+        background: var(--surface3);
+        border: 1px solid var(--border);
+        padding: 1px 5px;
         border-radius: 4px;
-        margin-top: 4px;
-      }
-      .options-link {
-        display: block;
-        text-align: center;
-        font-size: 0.85em;
-        color: #4f46e5;
-        text-decoration: none;
+        line-height: 1.2;
       }
 
-      #status {
-        margin: 8px 0 0;
+      .page-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+      }
+
+      .page-dot.inactive {
+        background: var(--text-3);
+      }
+
+      .section {
+        padding: 14px 16px 0;
+      }
+
+      .section-label {
+        font-size: 0.08rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 6px;
+      }
+
+      .profile-selector-wrap {
+        position: relative;
+      }
+
+      .profile-selector-wrap::after {
+        content: '';
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid var(--text-3);
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      .profile-select {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--r-sm);
+        color: var(--text-1);
         font-size: 0.82rem;
-        line-height: 1.4;
-        min-height: 1.2em;
+        font-weight: 500;
+        padding: 8px 28px 8px 10px;
+        outline: none;
+        cursor: pointer;
+        appearance: none;
+        appearance: none; 
+        -webkit-appearance: none;
+        transition: border-color var(--t) var(--ease), box-shadow var(--t) var(--ease);
       }
 
-      #status.error{
-        color: #b91c1c;
+      .profile-select option {
+        background: #121212;
+        color: var(--text-1);
       }
 
-      #status.ok {
-        color: #15803d;
+      .profile-mini-progess {
+        height: 2px;
+        background: var(--surface3);
+        border-radius: 9999px;
+        margin-top: 6px;
+        overflow: hidden;
       }
-      
-      .legend {
-        margin-top: 8px;
-        font-size: 0.75em;
-        color: #64748b;
+
+      .profile-mini-label {
+        font-size: 0.65rem;
+        color: var(--t) var(--ease);
+      }
+
+      .profile-mini-label.ready {
+        color: var(--text-2);
+      }
+
+      .fill-btn {
+        width: 100%;
+        padding: 10px 14px;
+        background: #fafafa;
+        border: 1px soldi rgba(255, 255, 255, 0.1);
+        border-radius: var(--r-sm);
+        color: #09090b;
+        font-family: inherit;
+        font-size: 0.86rem;
+        font-weight: 600;
+        cursor: pointer;
+        letter-spacing: -0.01em;
+        transition: background-color var(--t) var(--ease), opacity var(--t) var(--ease);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      .fill-btn:hover:not(:disabled) {
+        background: #e4e4e7;
+      }
+
+      .fill-btn:active:not(:disabled) {
+        background: #d4d4d8;
+      }
+      .fill-btn:disabled {
+        background: var(--surface3);
+        border-color: var(--border);
+        color: var(--text-3);
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      .fill-btn .fill-icon {
+        font-size: 0.95rem;
+        line-height: 1;
+      }
+      .fill-btn-spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(9, 9, 11, 0.25);
+        animation: spin 0.65s linear infinite;
         display: none;
       }
 
-      .legend span {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 2px;
-        margin-right: 4px;
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
 
-      .legend .green {
-        background: #22c55e;
+      .fill-btn.loading .fill-icon {
+        display: none;
       }
-
-      .legend .yellow {
-        background: #eab308;
-      }
-
-      .test-banner {
-        margin-top: 12px;
-        padding: 8px 10px;
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 6px;
-        text-align: center;
-      }
-
-      .test-banner-title {
-        font-size: 0.75rem;
-        color: #1e40af;
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
-
-      .test-btn {
-        width: 100%;
-        margin-top: 2px;
-        padding: 6px;
-        font-size: 0.82em;
-        background: #2563eb;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        font-weight: 500;
-        cursor: pointer;
-      }
-
-      .test-btn:hover {
-        background: #1d4ed8;
+      .fill-btn.loading .fill-btn-spinner {
+        display: block;
+      } 
+      .fill-btn.loading .fill-btn-label {
+        opacity: 0.7;
       }
     </style>
   </head>
   <body>
-    <h3>Fill My Form</h3>
-    <label for="profileSelect" style="font-size: 0.88em; font-weight: 500;">Profile</label>
-    <select id="profileSelect">
-      <option value="">Loading...</option>
-    </select>
+    <header class="popup-header">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">F</div>
+        <div>
+          <div class="brand-name">Fill My Form</div>
+          <div class="brand-version">V2.0</div>
+        </div>
+      </div>
+      <div class="page-dot" id="pageDot" title="Page status" aria-hidden="true"></div>
+    </header>
 
-    <button id="fillButton" class="primary-btn">Fill my Form</button>
+    <div class="onboarding-card" id="onboardingCard" style="display: none;" role="region" aria-label="First-run setup">
+      <div class="onboarding-glow" aria-hidden="true"></div>
+      <div class="onboarding-icon" aria-hidden="true">✦</div>
+      <div class="onboarding-title">Set up your profile once.</div>
+      <div class="onboarding-sub">Fill supported forms in one click.</div>
+      <button id="onboardingCreateBtn" class="onboarding-btn">
+        <span>Create Profile</span>
+        <span class="btn-arrow" aria-hidden="true">-></span>
+      </button>
+    </div>
+    <div id="mainFormSection">
+      <div class="section" id="profileSection">
+        <div class="section-label">Profile</div>
+        <div class="profile-selector-wrap">
+          <select id="profileSelect" class="profile-select" aria-label="Select profile">
+            <option value="">Loading...</option>
+          </select>
+        </div>
+        <div class="profile-mini-progress" aria-hidden="true">
+          <div class="profile-mini-fill" id="ProfileMiniFill"></div>
+        </div>
+        <div class="profile-mini-label" id="profileMiniLabel">-</div>
+      </div>
+      <div class="platform-row" id="platformRow">
+        <div class="platform-badge" id="platformBadge">
+          <div class="platform-dot" aria-hidden="true"></div>
+          <span id="platformLabel">Detecting page...</span>
+        </div>
+      </div>
 
-    <div id="status"></div>
-    <div id="legend" class="legend">
-      <div><span class="green"></span>Exact match</div>
-      <div><span class="yellow"></span>Close match — worth a glance</div>
+      <div class="fill-section" id="fillSection">
+        <button id="fillButton" class="fill-btn" disabled aria-label="Fill this form">
+          <span class="fill-icon" aria-hidden="true">✦</span>
+          <div class="fill-btn-spinner" aria-hidden="true"></div>
+          <span class="fill-btn-label">Fill My Form</span>
+        </button>
+      </div>
     </div>
 
-    <div class="test-banner">
-      <div class="test-banner-title">Try it out on a sample form</div>
-      <button id="testFormBtn" class="test-btn">Click here to test</button>
-    </div>
-
-    <div style="display: flex; justify-content: center; gap: 8px; margin-top: 12px; font-size: 0.8em;">
-      <a href="#" id="optionsLink" class="options-link">Manage Profiles</a>
-      <span style="color: #cbd5e1;">•</span>
-      <a href="/privacy.html" target="_blank" style="color: #64748b; text-decoration: none;">Privacy</a>
-    </div>
-    <div class="legend"></div>
+    
     <script type="module" src="./popup.ts"></script>
   </body>
 </html>
